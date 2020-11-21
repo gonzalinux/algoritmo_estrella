@@ -19,10 +19,10 @@ class Algoritmo:
         actual = None
         hijosActual = []
         # self.listaAbierta.append(self.origen)
-        while len(self.listaAbierta) is not 0:
+        while len(self.listaAbierta) != 0:
             actual = self.nodo_menor_dist_total(self.listaAbierta)
             self.listaCerrada.append(actual)
-            if actual.get_estacion().compare_to(self.destino.getEstacion()) is 0:
+            if actual.get_estacion().compare_to(self.destino.getEstacion()) == 0:
                 break
             else:
                 hijosActual = actual.get_hijos()
@@ -44,10 +44,10 @@ class Algoritmo:
 
         if lista.size() > 1:
             resultado = lista[0]
-            fnres = resultado.calcular_fn
+            fnres = resultado.calcular_distancia
             for i in range(lista.size()):
 
-                if lista[i].calcular_fn() < resultado.getFN():
+                if lista[i].calcular_distancia() < resultado.getFN():
                     resultado = lista.get(i)
         return resultado
 
@@ -68,5 +68,5 @@ class Algoritmo:
             self.recorrer_camino_y_almacenar(destiny.getPadre())
 
     def obtener_recorrido(self):
-        while not len(self.pilaNodos) is 0:
+        while not len(self.pilaNodos) == 0:
             self.recorridoFinal.append(self.pilaNodos.pop())

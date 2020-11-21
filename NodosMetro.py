@@ -1,7 +1,5 @@
 import math
 
-import Algoritmo
-
 
 class NodosMetro:
     def __init__(self, estacion, x, y, linea):
@@ -10,26 +8,21 @@ class NodosMetro:
         self.estacion = estacion
         self.adyacentes = []
         self.linea = linea
-        """ self.gn = 0
-        self.hn = 0
-        self.fn = 0"""
+        self.antecesor = None
+        self.g = 0
 
-    def calcular_fn(self, g, destino):
+    # calcula una distancia desde este nodo hasta el especificado en el segundo argumento
+    # ademas suma el primer argumento, si es 0 no suma nada.
+    def calcular_distancia(self, g, destino):
         return g + self.calcular_hn(destino)
 
     def calcular_hn(self, destino):
-        resultado = math.sqrt(
-            math.pow(self.x, 2) - math.pow(destino.x, 2) + math.pow(self.y, 2) - math.pow(destino.y, 2))
-        if isinstance(self.linea, list):
-            if isinstance(destino.linea, list):
-                if self.linea[0] in destino.linea or self.linea[1] in destino.linea:
-                    resultado *= 1.5
-            else:
-                if destino.linea in self.linea:
-                    resultado *= 1.5
-        elif isinstance(destino.linea, list) and self.linea in destino.linea:
-            resultado *= 1.5
-        else:
-            if destino.linea != self.linea:
-                resultado *= 1.5
+
+        resultado = math.sqrt(abs(math.pow(self.x - destino.x, 2) + (math.pow(self.y - destino.y, 2))))
+        for i in self.linea:
+            if i in self.antecesor.linea:
+                resultado *= 0.75
+            if i not in destino.linea:
+                resultado *= 1.15
+
         return resultado
