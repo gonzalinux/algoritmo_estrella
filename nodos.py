@@ -15,7 +15,7 @@ class Nodo:
         nodos["Perissos"] = NodosMetro("Perissos", 275, 269, [1])
         nodos["Ano Pahssia"] = NodosMetro("Ano Pahssia", 256, 288, [1])
         nodos["Aghios Eleftherios"] = NodosMetro("Aghios Eleftherios", 236, 308, [1])
-        nodos["Kato Patissia"] = NodosMetro("Kato Patissa", 215, 330, [1])
+        nodos["Kato Patissia"] = NodosMetro("Kato Patissia", 215, 330, [1])
         nodos["Aghios Nikolaos"] = NodosMetro("Aghios Nikolaos", 193, 351, [1])
         nodos["Attiki"] = NodosMetro("Attiki", 176, 370, [1, 2])
         nodos["Victoria"] = NodosMetro("Victoria", 213, 420, [1])
@@ -26,7 +26,7 @@ class Nodo:
         nodos["Tavros"] = NodosMetro("Tavros", 181, 569, [1])
         nodos["Kallithea"] = NodosMetro("Kallithea", 158, 593, [1])
         nodos["Moschato"] = NodosMetro("Moschato", 136, 613, [1])
-        nodos["Faliro"] = NodosMetro("Falira", 112, 638, [1])
+        nodos["Faliro"] = NodosMetro("Faliro", 112, 638, [1])
         nodos["Piraeus"] = NodosMetro("Piraeus", 22, 648, [1])
 
 
@@ -51,7 +51,7 @@ class Nodo:
         nodos["Koropi"] = NodosMetro("Koropi", 587, 478, [3])
         nodos["Paiania-Kantza"] = NodosMetro("Paiania-Kantza", 588, 370, [3])
         nodos["Pallini"] = NodosMetro("Pallini", 588, 325, [3])
-        nodos["Doukissis Planketias"] = NodosMetro("Doukissis Plakentias", 541, 305, [3])
+        nodos["Doukissis Plakentias"] = NodosMetro("Doukissis Plakentias", 541, 305, [3])
         nodos["Halandri"] = NodosMetro("Halandri", 510, 332, [3])
         nodos["Aghia Paraskevi"] = NodosMetro("Aghia Paraskevi", 492, 350, [3])
         nodos["Nomismatokopio"] = NodosMetro("Nomismatokopio", 475, 367, [3])
@@ -59,7 +59,7 @@ class Nodo:
         nodos["Ethniki Amyna"] = NodosMetro("Ethniki Amyna", 439, 402, [3])
         nodos["Katehaki"] = NodosMetro("Katehaki", 422, 421, [3])
         nodos["Panormou"] = NodosMetro("Panormou", 405, 438, [3])
-        nodos["Ambelokipi"] = NodosMetro("Ambelokipi", 387, 455, [3])
+        nodos["Ambelokipi"] = NodosMetro("Ambelokipi", 385, 455, [3])
         nodos["Megaro Moussikis"] = NodosMetro("Megaro Moussikis", 369, 475, [3])
 
 
@@ -73,10 +73,10 @@ class Nodo:
         nodos.get("Paiania-Kantza").adyacentes.append([nodos.get("Koropi"), 8170])
         nodos.get("Paiania-Kantza").adyacentes.append([nodos.get("Pallini"), 2470])
         nodos.get("Pallini").adyacentes.append([nodos.get("Paiania-Kantza"), 2470])
-        nodos.get("Pallini").adyacentes.append([nodos.get("Doukissis Planketias"), 3750])
-        nodos.get("Doukissis Planketias").adyacentes.append([nodos.get("Pallini"), 3750])
-        nodos.get("Doukissis Planketias").adyacentes.append([nodos.get("Halandri"), 1090])
-        nodos.get("Halandri").adyacentes.append([nodos.get("Doukissis Planketias"), 1090])
+        nodos.get("Pallini").adyacentes.append([nodos.get("Doukissis Plakentias"), 3750])
+        nodos.get("Doukissis Plakentias").adyacentes.append([nodos.get("Pallini"), 3750])
+        nodos.get("Doukissis Plakentias").adyacentes.append([nodos.get("Halandri"), 1090])
+        nodos.get("Halandri").adyacentes.append([nodos.get("Doukissis Plakentias"), 1090])
         nodos.get("Halandri").adyacentes.append([nodos.get("Aghia Paraskevi"), 900])
         nodos.get("Aghia Paraskevi").adyacentes.append([nodos.get("Halandri"), 900])
         nodos.get("Aghia Paraskevi").adyacentes.append([nodos.get("Nomismatokopio"), 1060])
@@ -164,8 +164,8 @@ class Nodo:
         nodos.get("Victoria").adyacentes.append([nodos.get("Attiki"), 1020])
         nodos.get("Victoria").adyacentes.append([nodos.get("Omonia"), 1000])
         nodos.get("Monastiraki").adyacentes.append([nodos.get("Omonia"), 940])
-        nodos.get("Monastiraki").adyacentes.append([nodos.get("Kerameikos"), ])
-        nodos.get("Monastiraki").adyacentes.append([nodos.get("Syntagma"), ])
+        nodos.get("Monastiraki").adyacentes.append([nodos.get("Kerameikos"), 1270])
+        nodos.get("Monastiraki").adyacentes.append([nodos.get("Syntagma"), 890])
         nodos.get("Monastiraki").adyacentes.append([nodos.get("Thissio"), 1430])
         nodos.get("Thissio").adyacentes.append([nodos.get("Petralona"), 1350])
         nodos.get("Thissio").adyacentes.append([nodos.get("Monastiraki"), 1350])
@@ -180,39 +180,6 @@ class Nodo:
         nodos.get("Faliro").adyacentes.append([nodos.get("Moschato"), 1760])
         nodos.get("Faliro").adyacentes.append([nodos.get("Piraeus"), 1950])
         nodos.get("Piraeus").adyacentes.append([nodos.get("Faliro"), 1950])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

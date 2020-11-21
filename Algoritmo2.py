@@ -8,13 +8,16 @@ class Algoritmo2:
         self.listaCerrada = []
         self.pilaNodos = []
         self.recorridoFinal = []
-
+        self.lineaactual = []
+        self.dist = 0
         self.anterior = None
+        self.ntrans = 0
 
     def run(self, origen, destino, nodos):
         self.nodos = nodos
         self.origen = origen
         self.destino = destino
+        self.lineaactual = origen.linea
 
         self.listaAbierta.append(origen)
         self.origen.antecesor = self.origen
@@ -25,7 +28,9 @@ class Algoritmo2:
                 break
 
             actual = self.nodo_menor_fn()
-            print(actual.estacion)
+
+            self.lineaactual = actual.linea
+
             actual.g = actual.calcular_distancia(actual.g, actual.antecesor)
             self.listaCerrada.append(actual)
             self.listaAbierta.remove(actual)
@@ -62,10 +67,28 @@ class Algoritmo2:
     def recorrer_camino(self):
         recorrido = [self.destino]
         actual = self.destino
-        while True:
 
+        for linea in actual.linea:
+            if linea in actual.antecesor.linea:
+                self.lineaactual = linea
+
+        while True:
             if actual == self.origen:
                 break
+            for linea in actual.linea:
+                if linea in actual.antecesor.linea:
+                    if linea!=self.lineaactual:
+                        self.lineaactual = linea
+                        self.ntrans += 1
+
+
+            for nod in actual.adyacentes:
+                if nod[0] == actual.antecesor:
+                    self.dist += nod[1]
+            if self.lineaactual == 2 or self.lineaactual==1:
+                actual.linea.reverse()
+
             actual = actual.antecesor
+
             recorrido.append(actual)
         return recorrido
