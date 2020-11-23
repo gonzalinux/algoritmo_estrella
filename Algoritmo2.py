@@ -42,9 +42,9 @@ class Algoritmo2:
                         i[0].antecesor = actual
                 else:
                     i[0].antecesor = actual
-                for i in actual.adyacentes:
-                    if i[0] not in self.listaCerrada and i[0] not in self.listaAbierta:
-                        self.listaAbierta.append(i[0])
+                for j in actual.adyacentes:
+                    if j[0] not in self.listaCerrada and j[0] not in self.listaAbierta:
+                        self.listaAbierta.append(j[0])
 
         if actual is not destino:
             print("No se ha encontrado destino")
@@ -77,15 +77,14 @@ class Algoritmo2:
                 break
             for linea in actual.linea:
                 if linea in actual.antecesor.linea:
-                    if linea!=self.lineaactual:
+                    if linea != self.lineaactual:
                         self.lineaactual = linea
                         self.ntrans += 1
-
 
             for nod in actual.adyacentes:
                 if nod[0] == actual.antecesor:
                     self.dist += nod[1]
-            if self.lineaactual == 2 or self.lineaactual==1:
+            if self.lineaactual == 2 or self.lineaactual == 1:
                 actual.linea.reverse()
 
             actual = actual.antecesor

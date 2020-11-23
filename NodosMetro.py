@@ -1,4 +1,5 @@
 import math
+__name__="NodosMetro"
 
 
 class NodosMetro:
