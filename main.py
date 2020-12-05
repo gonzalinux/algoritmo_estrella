@@ -8,12 +8,14 @@ from Algoritmo import Algoritmo
 from nodos import Nodo
 
 
+# funcion auxiliar para el empaquetado del programa,
 def resolver_ruta(ruta_relativa):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, ruta_relativa)
     return os.path.join(os.path.abspath('.'), ruta_relativa)
 
 
+#  Clase para ejecutar cambios en la interfaz grafica
 class Cambiar:
     def __init__(self):
         self.origen = None
@@ -23,6 +25,7 @@ class Cambiar:
         self.algoritmo = Algoritmo()
         self.nodos = Nodo().nodos.copy()
 
+    # la funcion reset deja el estado inicial
     def reset(self):
         self.origen = None
         self.destino = None
@@ -62,6 +65,7 @@ class Cambiar:
         for nodo in list(nodos.values()):
             nodo.antecesor = None
 
+    # Funcion que recibe el nodo pulsado en el mapa
     def selecion_nodo(self, nodo):
 
         if not self.selecionado1:
@@ -85,13 +89,13 @@ class Cambiar:
                 nodo.antecesor = None
             self.mostrar_camino()
 
+    # funcion para mostrar el recorrido una vez selecionados nodos origen y destino
     def mostrar_camino(self):
         for boton in botones:
             boton.pack_forget()
 
         recorrido = self.algoritmo.run(self.origen, self.destino, list(self.nodos.values()))
 
-        print("--------------------------")
         for sitio in recorrido:
             canvas.create_oval(sitio.x - 7, sitio.y - 7, sitio.x + 7, sitio.y + 7, outline="#f491ff", fill="#f4917f")
             canvas.create_line(sitio.x, sitio.y, sitio.antecesor.x, sitio.antecesor.y, width=6, fill="#f491f7")
@@ -115,13 +119,14 @@ class Cambiar:
         tiempo.configure(state="disabled")
 
 
+# proceso proncipal del programa
 if __name__ == '__main__':
     cambiar = Cambiar()
     selecionado1 = False
     selecionado2 = False
     destino = None
     origen = None
-
+    # Se usa tkinter para el desarrollo grafico
     raiz = Tk()
     fontStyle = tkFont.Font(family="Yu Gothic Light", size=15)
     fontStyle2 = tkFont.Font(family="MS UI Gothic", size=20)
@@ -129,12 +134,11 @@ if __name__ == '__main__':
     raiz.geometry('1100x778')
     raiz.configure(bg='#d7e1ed')
     raiz.title("mapa")
-
+    # se carga la imagen del mapa y los botones
     imagen = PhotoImage(file=resolver_ruta("mapa-metroatenas.png"))
     imagencir = PhotoImage(file=resolver_ruta("imgbot.png"))
-    # fondo = Label(raiz, image=imagen).place(x=0, y=0)
 
-    botones = []
+
 
     canvas = Canvas(width=710, height=778, bg="#d7e1ed")
     canvas.pack(expand=YES, fill=BOTH)
@@ -145,15 +149,16 @@ if __name__ == '__main__':
 
     botones = []
     j = 0
-
+    #se crean todos los botones correspondientes a cada nodo
     for i in nodos.values():
         botones.append(Button(raiz, image=imagencir, bg="#3e30a6", width=10, height=10))
         botones[j].pack()
         botones[j].place(x=i.x - 5, y=i.y - 5)
+        #cuando se presione el boton se ejecuta la selecion de nodo
         botones[j].configure(command=partial(cambiar.selecion_nodo, i))
 
         j += 1
-
+    #resto de apartados graficos.
     info0 = Label(raiz, text="Calculador de rutas \ndel metro de Atenas", bg="#d7e1ed", font=fontStyle3)
     info0.place(x=740, y=40)
     info1 = Label(raiz, text="Punto de Origen:", bg="#d7e1ed", font=fontStyle)

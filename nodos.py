@@ -1,6 +1,9 @@
 from NodosMetro import NodosMetro
 
 
+# clase nodo con un dictado de todos las estaciones con
+# el nodo que la representa, guardandose, las coordenadas x e y
+# y la linea en la que estan. Luego se le añaden sus adyacentes
 class Nodo:
     def __init__(self):
         nodos = dict()
@@ -29,8 +32,6 @@ class Nodo:
         nodos["Faliro"] = NodosMetro("Faliro", 112, 638, [1])
         nodos["Piraeus"] = NodosMetro("Piraeus", 22, 648, [1])
 
-
-
         nodos["Aghios Antonios"] = NodosMetro("Aghios Antonios", 113, 305, [2])
         nodos["Sepolia"] = NodosMetro("Sepolia", 144, 338, [2])
         nodos["Larissa Station"] = NodosMetro("Larissa Station", 176, 402, [2])
@@ -44,8 +45,6 @@ class Nodo:
         nodos["Aghios Dimitrios"] = NodosMetro("Aghios Dimitrios", 253, 674, [2])
         nodos["Syntagma"] = NodosMetro("Syntagma", 250, 485, [3, 2])
         nodos["Evangelismos"] = NodosMetro("Evangelismos", 316, 485, [3])
-
-
 
         nodos["Airport"] = NodosMetro("Airport", 648, 503, [3])
         nodos["Koropi"] = NodosMetro("Koropi", 587, 478, [3])
@@ -61,7 +60,6 @@ class Nodo:
         nodos["Panormou"] = NodosMetro("Panormou", 405, 438, [3])
         nodos["Ambelokipi"] = NodosMetro("Ambelokipi", 385, 455, [3])
         nodos["Megaro Moussikis"] = NodosMetro("Megaro Moussikis", 369, 475, [3])
-
 
         nodos["Kerameikos"] = NodosMetro("Kerameikos", 128, 476, [3])
         nodos["Eleonas"] = NodosMetro("Eleonas", 92, 443, [3])
@@ -181,10 +179,4 @@ class Nodo:
         nodos.get("Faliro").adyacentes.append([nodos.get("Piraeus"), 1950])
         nodos.get("Piraeus").adyacentes.append([nodos.get("Faliro"), 1950])
 
-
-
-
-
-
-
-        self.nodos=nodos
+        self.nodos = nodos
