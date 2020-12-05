@@ -4,7 +4,7 @@ import tkinter.font as tkFont
 from functools import partial
 from tkinter import *
 
-from Algoritmo2 import Algoritmo2
+from Algoritmo import Algoritmo
 from nodos import Nodo
 
 
@@ -20,7 +20,7 @@ class Cambiar:
         self.destino = None
         self.selecionado1 = False
         self.selecionado2 = False
-        self.algoritmo = Algoritmo2()
+        self.algoritmo = Algoritmo()
         self.nodos = Nodo().nodos.copy()
 
     def reset(self):
@@ -57,7 +57,7 @@ class Cambiar:
 
         canvas.delete("all")
         canvas.create_image(710 / 2, 778 / 2, image=imagen)
-        self.algoritmo = Algoritmo2()
+        self.algoritmo = Algoritmo()
         self.nodos = Nodo().nodos.copy()
         for nodo in list(nodos.values()):
             nodo.antecesor = None
@@ -79,7 +79,7 @@ class Cambiar:
             self.destino = nodo
             canvas.delete("all")
             canvas.create_image(710 / 2, 778 / 2, image=imagen)
-            self.algoritmo = Algoritmo2()
+            self.algoritmo = Algoritmo()
             self.nodos = Nodo().nodos.copy()
             for nodo in list(nodos.values()):
                 nodo.antecesor = None
@@ -141,7 +141,7 @@ if __name__ == '__main__':
     canvas.create_image(710 / 2, 778 / 2, image=imagen)
 
     nodos = cambiar.nodos
-    algoritmo = Algoritmo2()
+    algoritmo = Algoritmo()
 
     botones = []
     j = 0

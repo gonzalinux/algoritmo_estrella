@@ -1,72 +1,93 @@
 class Algoritmo:
 
-    def __init__(self, origen, destino, nodos):
-        self.listaAbierta = [origen]
+    def __init__(self):
+        self.nodos = None
+        self.origen = None
+        self.destino = None
+        self.listaAbierta = []
         self.listaCerrada = []
         self.pilaNodos = []
         self.recorridoFinal = []
+        self.lineaactual = []
+        self.dist = 0
+        self.anterior = None
+        self.ntrans = 0
+
+    def run(self, origen, destino, nodos):
         self.nodos = nodos
         self.origen = origen
         self.destino = destino
+        self.lineaactual = origen.linea
 
-    def algoritmo_a_estrella(self):
-        recorrido = self.recorrer_grafo()
-        self.recorrer_camino_y_almacenar(recorrido)
-        self.obtener_recorrido()
-        return self.recorridoFinal
-
-    def recorrer_grafo(self):
+        self.listaAbierta.append(origen)
+        self.origen.antecesor = self.origen
         actual = None
-        hijosActual = []
-        # self.listaAbierta.append(self.origen)
+
         while len(self.listaAbierta) != 0:
-            actual = self.nodo_menor_dist_total(self.listaAbierta)
-            self.listaCerrada.append(actual)
-            if actual.get_estacion().compare_to(self.destino.getEstacion()) == 0:
+            if actual is destino:
                 break
-            else:
-                hijosActual = actual.get_hijos()
-                for i in range(hijosActual.size()):
-                    if not self.listaAbierta.__contains__(hijosActual.get(1)) and \
-                            not self.listaCerrada.__contains__(hijosActual.get(i)):
 
-                        self.calcular_fn(hijosActual.get(i), actual)
-                        hijosActual.get(i).set_padre(actual)
-                        self.listaAbierta.append(hijosActual.get(i))
-                    elif self.listaAbierta.__contains__(hijosActual.get(i)):
-                        if hijosActual.get(i).getGN() < actual.getGN():
-                            self.calcular_fn(actual, hijosActual.get(i))
+            actual = self.nodo_menor_fn()
+
+            self.lineaactual = actual.linea
+
+            actual.g = actual.calcular_distancia(actual.g, actual.antecesor)
+            self.listaCerrada.append(actual)
             self.listaAbierta.remove(actual)
-        return actual
+            for i in actual.adyacentes:
+                if i[0].antecesor is not None:
+                    if i[0].calcular_distancia(i[0].antecesor.g, i[0].antecesor) > i[0].calcular_distancia(actual.g,
+                                                                                                           actual) and \
+                            i[0].antecesor not in self.listaCerrada:
+                        i[0].antecesor = actual
+                else:
+                    i[0].antecesor = actual
+                for j in actual.adyacentes:
+                    if j[0] not in self.listaCerrada and j[0] not in self.listaAbierta:
+                        self.listaAbierta.append(j[0])
 
-    @staticmethod
-    def nodo_menor_dist_total(lista):
+        if actual is not destino:
+            print("No se ha encontrado destino")
+            return
+        return self.recorrer_camino()
 
-        if lista.size() > 1:
-            resultado = lista[0]
-            fnres = resultado.calcular_distancia
-            for i in range(lista.size()):
+    def nodo_menor_fn(self):
+        resultado = self.listaAbierta[0]
+        for nodo in self.listaAbierta:
+            distancianodo = nodo.calcular_distancia(nodo.calcular_distancia(nodo.antecesor.g, nodo.antecesor),
+                                                    self.destino)
+            distanciares = resultado.calcular_distancia(
+                resultado.calcular_distancia(resultado.antecesor.g, resultado.antecesor), self.destino)
 
-                if lista[i].calcular_distancia() < resultado.getFN():
-                    resultado = lista.get(i)
+            if distancianodo < distanciares:
+                resultado = nodo
+
         return resultado
 
-    def calcular_fn(self, hijo, padre):
-        distancias = padre.getHijosDistancia()
-        gn_to_padre = distancias.get(hijo)
-        hijo.setGN(padre.getGN() + gn_to_padre)
-        hijo.setHN(hijo.calcularHN(self.destino, hijo))
-        hijo.setFN(hijo.getGN() + hijo.getHN())
+    def recorrer_camino(self):
+        recorrido = [self.destino]
+        actual = self.destino
 
-    def recorrer_camino_y_almacenar(self, destiny):
-        if destiny.getEstacion().compareTo(self.origen.getEstacion()) == 0:
-            self.pilaNodos.append(destiny)
+        for linea in actual.linea:
+            if linea in actual.antecesor.linea:
+                self.lineaactual = linea
 
+        while True:
+            if actual == self.origen:
+                break
+            for linea in actual.linea:
+                if linea in actual.antecesor.linea:
+                    if linea != self.lineaactual:
+                        self.lineaactual = linea
+                        self.ntrans += 1
 
-        else:
-            self.pilaNodos.append(destiny)
-            self.recorrer_camino_y_almacenar(destiny.getPadre())
+            for nod in actual.adyacentes:
+                if nod[0] == actual.antecesor:
+                    self.dist += nod[1]
+            if self.lineaactual == 2 or self.lineaactual == 1:
+                actual.linea.reverse()
 
-    def obtener_recorrido(self):
-        while not len(self.pilaNodos) == 0:
-            self.recorridoFinal.append(self.pilaNodos.pop())
+            actual = actual.antecesor
+
+            recorrido.append(actual)
+        return recorrido
